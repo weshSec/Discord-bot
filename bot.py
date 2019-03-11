@@ -22,12 +22,15 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+
+    #if message.content.startswith(''):
+
 	
     if message.content.startswith('help!'):
-        embed = discord.Embed(title="**Nao**", description="A bot under development.", colour=0x989898)
+        embed = discord.Embed(title="**Nao**", description="A bot under development.", colour=0xff00b8)
         embed.set_thumbnail(url='https://wiki.mabinogiworld.com/images/thumb/0/07/Nao.png/215px-Nao.png')
-        embed.add_field(name=":alarm_clock: Time", value="```time!```", inline=False)
-        embed.add_field(name=":zzz: Sleep", value="```sleep!```" , inline=False)
+        embed.add_field(name=":alarm_clock: Time", value="``time!``", inline=True)
+        embed.add_field(name=":speech_balloon: Spam", value="``spam! | spam! s``" , inline=True)
         await client.send_message(message.channel, embed=embed)
 
     if message.content.startswith('test!'):
@@ -40,35 +43,101 @@ async def on_message(message):
         await client.edit_message(tmp, 'You have {} messages.'.format(counter))
 
     if message.content.startswith('spam!'):
-        await client.delete_message(message)
-        spam = ""
-        string = message.content.split()
-        for i in range(len(string)):
-            if not(i==0 or i==len(string)-1):
-                spam += " "+string[i]
-        times = int(string[len(string)-1])
-        if times <= 20:
-            for i in range(times):
-                await asyncio.sleep(1)
-                await client.send_message(message.channel, spam)
+        if message.author.id != client.user.id:
+            await client.delete_message(message)
+            spam = ""
+            string = message.content.split()
+            times = int(string[len(string)-1])
+            if string[1] == "s":
+                for i in range(len(string)):
+                    if not(i<2 or i==len(string)-1):
+                        spam += " "+string[i]
+                        if "554324647710294026" in [role.id for role in message.author.roles]:
+                            if times <= 50:
+                                for i in range(times):
+                                    await asyncio.sleep(1)
+                                    if not(i==times-1):
+                                        await client.send_message(message.channel, spam)
+                                        async for m in client.logs_from(message.channel, limit=1):
+                                            check = str(message.content.split()[2:3])
+                                            if check[2:3] in spam:
+                                                await client.delete_message(m)
+                                    else:
+                                        await client.send_message(message.channel, spam)
+                            else:
+                                for i in range(50):
+                                    await asyncio.sleep(1)
+                                    if not(i==times-1):
+                                        await client.send_message(message.channel, spam)
+                                        async for m in client.logs_from(message.channel, limit=1):
+                                            check = str(message.content.split()[2:3])
+                                            if check[2:3] in spam:
+                                                await client.delete_message(m)
+                                    else:
+                                        await client.send_message(message.channel, spam)
+                        else:
+                            if times <= 20:
+                                for i in range(times):
+                                    await asyncio.sleep(1)
+                                    if not(i==times-1):
+                                        await client.send_message(message.channel, spam)
+                                        async for m in client.logs_from(message.channel, limit=1):
+                                            check = str(message.content.split()[2:3])
+                                            if check[2:3] in spam:
+                                                await client.delete_message(m)
+                                    else:
+                                        await client.send_message(message.channel, spam)
+                            else:
+                                for i in range(20):
+                                    await asyncio.sleep(1)
+                                    if not(i==times-1):
+                                        await client.send_message(message.channel, spam)
+                                        async for m in client.logs_from(message.channel, limit=1):
+                                            check = str(message.content.split()[2:3])
+                                            if check[2:3] in spam:
+                                                await client.delete_message(m)
+                                    else:
+                                        await client.send_message(message.channel, spam)
+            else:
+                for i in range(len(string)):
+                    if not(i==0 or i==len(string)-1):
+                        spam += " "+string[i]
+                if "554324647710294026" in [role.id for role in message.author.roles]:
+                    if times <= 50:
+                        for i in range(times):
+                            await asyncio.sleep(1)
+                            await client.send_message(message.channel, spam)
+                    else:
+                        for i in range(50):
+                            await asyncio.sleep(1)
+                            await client.send_message(message.channel, spam)
+                elif times <= 20:
+                    for i in range(times):
+                        await asyncio.sleep(1)
+                        await client.send_message(message.channel, spam)
+                else:
+                    for i in range(20):
+                        await asyncio.sleep(1)
+                        await client.send_message(message.channel, spam)
 
     if message.content.startswith('clear!'):
-        await client.delete_message(message)
-        command = message.content.split()
-        times = int(command[1])
-        if times <= 100:
-            async for m in client.logs_from(message.channel, limit=times):
-                try:
-                    await client.delete_message(m)
-                except:
-                    pass
+        if "554324647710294026" in [role.id for role in message.author.roles]:
+            await client.delete_message(message)
+            command = message.content.split()
+            times = int(command[1])
+            if times <= 100:
+                async for m in client.logs_from(message.channel, limit=times):
+                    try:
+                        await client.delete_message(m)
+                    except:
+                        pass
 
 
     if message.content.startswith('time!'):
-    	embed = discord.Embed(title="**Time**", description="Server Time [24hours] Erinn Time[12hours]", colour=0x989898)
+    	embed = discord.Embed(title="**Time**", description="Server Time[24hours] Erinn Time[12hours]", colour=0xff00b8)
     	embed.set_thumbnail(url='https://wiki.mabinogiworld.com/images/thumb/2/28/Tarlach.png/166px-Tarlach.png')
-    	embed.add_field(name=":desktop: Server Time", value="```"+Server_Time()[:5]+"```", inline=False)
-    	embed.add_field(name=":star: Erinn Time", value="```"+Erinn_Time()+"```", inline=False)
+    	embed.add_field(name=":desktop: Server Time", value="``"+Server_Time()[:5]+"``", inline=True)
+    	embed.add_field(name=":star: Erinn Time", value="``"+Erinn_Time()+"``", inline=True)
     	await client.send_message(message.channel, embed=embed)
 
 def Server_Time():
