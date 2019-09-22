@@ -1,4 +1,4 @@
-# Discord_bot
+# Discord-bot
 Discord bot using discord.py library
 - Gives the server real time and the in game time
 - Can spam what you want (max.20)
